@@ -1,31 +1,43 @@
 <h1>App > Create</h1>
 
-<label for="">Namn:</label>
-<input id="listingName" type="text" name="name" autofocus/>
+<label for="nameFinal">Namn:</label>
+<input id="nameFinal" type="text" name="nameFinal" />
+
+<label for="race">Ras:</label>
+<input id="race" type="text" name="race" />
+
+<label for="dnd_class">Klass:</label>
+<input id="dnd_class" type="text" name="dnd_class" />
+
+<label for="level">Level:</label>
+<input id="level" type="text" name="level" />
 
 <button id="btnSave" class="button-save" type="submit">Spara</button>
 
 <script>
-
     var btnSave = document.querySelector('#btnSave')
-    var listingName = document.querySelector('#listingName');
+    //var name = document.querySelector('#name');
 
     btnSave.addEventListener('click', () => {
-
-        console.log(listingName.value)
+        console.log(nameFinal.value)
 
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name: listingName.value })
-        };
+            body: JSON.stringify({
+                name: nameFinal.value,
+                race: race.value,
+                dnd_class: dnd_class.value,
+                level: Number(level.value)
+            })
+        }
 
-        fetch('http://localhost:3000/character/add', options)
-        .then(response => console.log(response))
-        .catch(error => {
-            console.error(error);
-        });
-    });
+        fetch('http://localhost:3002/character/add', options)
+            .then((response) => console.log(response))
+            .catch((error) => {
+                console.error(error)
+            })
+    })
 </script>
