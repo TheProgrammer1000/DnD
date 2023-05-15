@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dungeon</title>
+  <style>
+    .character-box {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid black;
+      text-align: center;
+    }
+
+    .character-image {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dungeon</h1>
+
+  <div id="characterList"></div>
+  <div id="result-message"></div>
+  <script>
+    // Function to fetch and display character data
+    function displayCharacters() {
+      fetch('http://localhost:3002/character/all')
+        .then((response) => response.json())
+        .then((characters) => {
+          const characterList = document.getElementById('characterList');
+
+          characters.forEach((character) => {
+            const characterBox = document.createElement('div');
+            characterBox.classList.add('character-box');
+
+            const characterImage = document.createElement('img');
+            characterImage.src = getRandomImage();
+            characterImage.alt = 'Character Image';
+            characterImage.classList.add('character-image');
+            characterBox.appendChild(characterImage);
+
+            const characterName = document.createElement('p');
+            characterName.innerText = character.name;
+            characterBox.appendChild(characterName);
+
+            const fightButton = document.createElement('button');
+            fightButton.innerText = 'Fight';
+            fightButton.addEventListener('click', () => checkCharacterLevel(character));
+            characterBox.appendChild(fightButton);
+
+            characterList.appendChild(characterBox);
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    // Function to get a random image path from the "images" folder
+    function getRandomImage() {
+      const imageNames = ['avatar1.jpg', 'avatar2.jpg', 'avatar3.jpg', 'avatar4.jpg','avatar5.jpg','avatar6.jpg', 'avatar7.jpg', 'avatar8.jpg', 'avatar9.jpg','avatar10.jpg'];
+      const randomIndex = Math.floor(Math.random() * imageNames.length);
+      return `images/${imageNames[randomIndex]}`;
+    }
+
+    // Function to check the character level and handle the fight result
+    function checkCharacterLevel(character) {
+      const { name, level } = character;
+
+      if (Number(level) >= 30) {
+        console.log(`You survive: ${name}`);
+      } else {
+        console.log(`You die: ${name}`);
+
+        // Delete the character from the database
+        fetch(`http://localhost:3002/character/${name}`, {
+          method: 'DELETE'
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log(`Deleted character: ${name}`);
+            } else {
+              console.log(`Failed to delete character: ${name}`);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    }
+
+    // Call the displayCharacters function to fetch and display the character data
+    displayCharacters();
+  </script>
+</body>
+</html>

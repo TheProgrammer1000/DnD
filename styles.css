@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 10px; /* Add left margin */
+}
+
+.button-save {
+    width: 100px;
+    padding: 8px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-save:hover {
+    background-color: #45a049;
+}
+#inputs{
+    margin-left: 10rem;
+}
+.character-sheet {
+    display: inline-block;
+    width: 400px;
+    margin: 30px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.character-sheet h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.character-sheet p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.character-sheet hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.character-sheet .character-image {
+    width: 200px; /* Customize the width as needed */
+    height: 200px; /* Customize the height as needed */
+    object-fit: cover;
+    border-radius: 50%;
+}
+#characterList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+.character-box {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+  }
+
+  .character-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  #result-message {
+    margin-top: 20px;
+    font-weight: bold;
+  }
