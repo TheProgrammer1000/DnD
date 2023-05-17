@@ -4,31 +4,74 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dungeon</title>
+  <title>The Deadmines</title>
   <style>
     .character-box {
       display: inline-block;
       margin: 10px;
-      padding: 10px;
-      border: 1px solid black;
-      text-align: center;
-    }
+      padding: 5px;
+      background-color: rgb(251, 210, 133);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 
+    }
     .character-image {
       width: 150px;
       height: 150px;
       object-fit: cover;
       border-radius: 50%;
+
     }
+    body {
+    background-image: url(images/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .corner-image {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
   </style>
 </head>
 <body>
-  <h1>Dungeon</h1>
+  <h1>THE DEADMINES</h1>
 
   <div id="characterList"></div>
   <div id="result-message"></div>
   <script>
-    // Function to fetch and display character data
+  function getRandomSurvivalMessage() {
+    const messages = [
+      "You successfully charge Edwin VanCleef, furiously assaulting him with your weapon, and retreat without recieving any harm.",
+      "You evade Edwins attacks with ease, buying time for your allies to strike.",
+      "Your passives proc and you strike the fattest crit known to Azeroth, gg ez ty for run",
+      "You pop all your cooldowns and watch your name climb to the top of the dps meter. You feel the urge to let your party know they suck.",
+      "Your armor serves you well, and you recieve blow after blow without flinching.",
+      "Your weapons strike true, and Edwin loses his footing from your relentless rage.",
+      "Your spells connect, searing Edwin VanCleef as he shrieks in pain.",
+      "You swing your weapon against Edwin, connecting a single blow before skillfully retreating back.",
+      "Your mastery of the elements are unrivaled, Edwin is struck a bolt of thunder.",
+      "You attack with indestructible rage, inflicting multiple wounds on your foe.",
+      "Your arrows strike true, and Edwin is wounded by your unrelenting barrage."
+    ];
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    return messages[randomIndex];
+  }
+  function getRandomLoseMessage() {
+    const loseMessages = [
+      "Edwin VanCleef swings at you and you are too slow to react. The killing blow is not a merciful one. (You died)",
+      "Your tank screams at you to get out of the way but your overconfidence is your downfall. Edwin strikes you down. (You died)",
+      "You clearly stood in the fire, idiot. (You died)",
+      "Your healer forgot to heal you and you died slowly from their neglect. Thanks, man. (You died)",
+      "You charge in way to fast screaming your name, and the tank has no chance to taunt. (You died, but at least you have chicken)",
+      "You are clearly underleveled and was promptly one-shotted. Thats what you get for getting boosted. (You died)",
+      "Edwin identifies you as the weak link and moves in for the kill, swiftly eliminating you. (You died)",
+      "The battle rages, but it takes its toll. You fall lifeless to the ground. (You died)",
+      "get shit on scrub. (You died)"
+    ];
+    const randomIndex = Math.floor(Math.random() * loseMessages.length);
+    return loseMessages[randomIndex];
+  }
     function displayCharacters() {
       fetch('http://localhost:3002/character/all')
         .then((response) => response.json())
@@ -61,26 +104,33 @@
           console.error(error);
         });
     }
-
-    // Function to get a random image path from the "images" folder
     function getRandomImage() {
-      const imageNames = ['avatar1.jpg', 'avatar2.jpg', 'avatar3.jpg', 'avatar4.jpg','avatar5.jpg','avatar6.jpg', 'avatar7.jpg', 'avatar8.jpg', 'avatar9.jpg','avatar10.jpg'];
+      const imageNames = ['avatar1.jpg', 'avatar2.jpg', 'avatar3.jpg', 'avatar4.jpg','avatar5.jpg','avatar6.jpg', 'avatar7.jpg', 'avatar8.jpg', 'avatar9.jpg','avatar10.jpg','avatar11.jpg', 'avatar12.jpg', 'avatar13.jpg', 'avatar14.jpg','avatar15.jpg','avatar16.jpg', 'avatar17.jpg', 'avatar18.jpg'];
       const randomIndex = Math.floor(Math.random() * imageNames.length);
       return `images/${imageNames[randomIndex]}`;
     }
 
-    // Function to check the character level and handle the fight result
     function checkCharacterLevel(character) {
-      const { name, level } = character;
+      const { name, level, _id } = character;
+
+      console.log('level: ', level);
+      console.log('_id: ', _id);
+
 
       if (Number(level) >= 30) {
-        console.log(`You survive: ${name}`);
+        const message = getRandomSurvivalMessage();
+                setResultMessage(message);
       } else {
-        console.log(`You die: ${name}`);
+                    const message = getRandomLoseMessage();
+                    setResultMessage(message);
 
-        // Delete the character from the database
-        fetch(`http://localhost:3002/character/${name}`, {
-          method: 'DELETE'
+        fetch(`http://localhost:3002/character/remove`, {
+          method: 'DELETE',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(character),
+
         })
           .then((response) => {
             if (response.ok) {
@@ -95,8 +145,11 @@
       }
     }
 
-    // Call the displayCharacters function to fetch and display the character data
     displayCharacters();
+    function setResultMessage(message) {
+    alert(message);
+  }
   </script>
+  <img src="images/edwin.jpg" alt="Corner Image" class="corner-image">
 </body>
 </html>

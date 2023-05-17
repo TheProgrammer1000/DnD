@@ -5,30 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Dungeons and Coders</title>
+    <title>World of Coders</title>
 </head>
 <body>
     <h1>Current Party</h1>
     <br>
-    <button id="btnGoToDungeon" class="button-goto" type="button">Go to Dungeon</button>
+    <button id="btnGoToDungeon" class="button-goto" type="button">Enter the Deadmines</button>
     <div id="characterList"></div>
     <button id="btnSave" class="button-save" type="submit">Spara</button>
     <script>
-        // Array of image filenames
-        const imageFilenames = ['avatar1.jpg', 'avatar2.jpg', 'avatar3.jpg', 'avatar4.jpg','avatar5.jpg','avatar6.jpg', 'avatar7.jpg', 'avatar8.jpg', 'avatar9.jpg','avatar10.jpg'];
 
-        // Fetch character entries from the REST API using GET method
+        const imageFilenames = ['avatar1.jpg', 'avatar2.jpg', 'avatar3.jpg', 'avatar4.jpg','avatar5.jpg','avatar6.jpg', 'avatar7.jpg', 'avatar8.jpg', 'avatar9.jpg','avatar10.jpg','avatar11.jpg', 'avatar12.jpg', 'avatar13.jpg', 'avatar14.jpg','avatar15.jpg','avatar16.jpg', 'avatar17.jpg', 'avatar18.jpg'];
         fetch('http://localhost:3002/character/all')
             .then((response) => response.json())
             .then((data) => {
-                // Display the character entries
                 const characterList = document.getElementById('characterList');
 
                 data.forEach((character) => {
                     const characterEntry = document.createElement('div');
                     characterEntry.classList.add('character-sheet');
 
-                    // Randomly select an image filename
                     const randomImageFilename = imageFilenames[Math.floor(Math.random() * imageFilenames.length)];
 
                     characterEntry.innerHTML = `<h2>${character.name}</h2>
@@ -47,7 +43,6 @@
                 var btnGoToDungeon = document.querySelector('#btnGoToDungeon');
 
         btnSave.addEventListener('click', () => {
-            // Code for saving the character entry
         });
 
         btnGoToDungeon.addEventListener('click', () => {

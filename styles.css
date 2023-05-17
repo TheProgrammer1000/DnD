@@ -60,11 +60,12 @@ h1 {
 }
 .character-sheet {
     display: inline-block;
-    width: 400px;
+    width: 300px;
+    height: 450px;
     margin: 30px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    background-color: rgb(251, 210, 133);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -90,8 +91,8 @@ h1 {
 }
 
 .character-sheet .character-image {
-    width: 200px; /* Customize the width as needed */
-    height: 200px; /* Customize the height as needed */
+    width: 200px;
+    height: 200px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -99,10 +100,11 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
+
 }
 .character-box {
     display: inline-block;
-    margin: 10px;
+    margin: 5px;
     padding: 10px;
     border: 1px solid black;
     text-align: center;
@@ -118,3 +120,19 @@ h1 {
     margin-top: 20px;
     font-weight: bold;
   }
+    .character-image {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .button-goto{
+        width: 100px;
+        padding: 8px;
+        font-size: 14px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }

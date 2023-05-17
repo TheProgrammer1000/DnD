@@ -14,6 +14,6 @@ app.get('/', (req, res) => {
     res.send('Send!!!!')
 })
 
-app.listen(PORT, () => { // LYSSNA på port
+app.listen(PORT, () => {
     console.log('API - Listening on port*:' + PORT);
 });
