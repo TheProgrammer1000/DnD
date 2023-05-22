@@ -111,39 +111,42 @@
     }
 
     function checkCharacterLevel(character) {
-      const { name, level, _id } = character;
+  try {
+    const { name, level, _id } = character;
 
-      console.log('level: ', level);
-      console.log('_id: ', _id);
+    console.log('level: ', level);
+    console.log('_id: ', _id);
 
+    if (Number(level) >= 30) {
+      const message = getRandomSurvivalMessage();
+      setResultMessage(message);
+    } else {
+      const message = getRandomLoseMessage();
+      setResultMessage(message);
 
-      if (Number(level) >= 30) {
-        const message = getRandomSurvivalMessage();
-                setResultMessage(message);
-      } else {
-                    const message = getRandomLoseMessage();
-                    setResultMessage(message);
-
-        fetch(`http://localhost:3002/character/remove`, {
-          method: 'DELETE',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(character),
-
+      fetch(`http://localhost:3002/character/remove`, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(character),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log(`Deleted character: ${name}`);
+          } else {
+            console.log(`Failed to delete character: ${name}`);
+          }
         })
-          .then((response) => {
-            if (response.ok) {
-              console.log(`Deleted character: ${name}`);
-            } else {
-              console.log(`Failed to delete character: ${name}`);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
+        .catch((error) => {
+          console.error(error);
+        });
     }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
     displayCharacters();
     function setResultMessage(message) {
