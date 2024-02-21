@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Preferences with Gradient Highlights</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #preferencesList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px; /* Adjust based on your preference */
+        }
+
+        .preferenceItem {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .preferenceItem h3 {
+            margin-top: 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .preferenceItem p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+        }
+
+        a {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .color-0 { background-color: #006400; } /* Dark Green */
+        .color-1 { background-color: #008000; } /* Green */
+        .color-2 { background-color: #ADFF2F; } /* Bright Green */
+        .color-3 { background-color: #FFFF00; } /* Yellow-Green */
+        .color-4 { background-color: #FFFF00; } /* Yellow */
+        .color-5 { background-color: #FFD700; } /* Gold */
+        .color-6 { background-color: #FFA500; } /* Orange */
+        .color-7 { background-color: #FF8C00; } /* Dark Orange */
+        .color-8 { background-color: #FF4500; } /* Orange-Red */
+        .color-9 { background-color: #FF0000; } /* Bright Red */
+    </style>
+
+</head>
+<body>
+<h1>Kompatibilitet</h1>
+<h2 id="mostCompatibleWoman"></h2>
+<div id="preferencesList"></div>
+
+<a href="input.html">Formulär</a>
+<a href="display.html">Hemsida</a>
+
+<script>
+const masterNumbers = {
+        "watchMovie": 10,
+        "watchSeries": 9,
+        "clean": 4,
+        "drink": 10,
+        "workOut": 9,
+        "bake": 7,
+        "eat": 8,
+        "party": 8,
+        "club": 5,
+        "compete": 9,
+        "nature": 10,
+        "cook": 6,
+        "smoke": 0,
+        "travel": 9,
+        "cats": 10,
+        "dogs": 6,
+        "dance": 5,
+        "stayUp": 9,
+        "smokeWeed": 2,
+        "boardGames": 10,
+        "videoGames": 9,
+        "school": 7,
+        "realityTv": 9, // Corrected from "realityTV" to "realityTv"
+        "sex": 8,
+        "sportsActivities": 7,
+        "watchSports": 4,
+        "anime": 8,
+        "camping": 9,
+        "clothes": 5
+    };
+
+    function calculateCompatibilityScore(difference) {
+    function calculateCompatibilityScore(difference) {
+        return Math.max(10 - Math.abs(difference), 0); // Ensure the score is not negative
+    }
+
+    function fetchAndDisplayPreferences() {
+        fetch('http://localhost:3002/people/all') // Replace with the correct server URL
+            .then(response => response.json())
+            .then(data => {
+                // Calculate total CS for each person and sort by it
+                const sortedData = data.map(person => {
+                    let totalCS = 0;
+                    Object.entries(person.preferences).forEach(([key, value]) => {
+                        const difference = value - masterNumbers[key];
+                        totalCS += calculateCompatibilityScore(difference);
+                    });
+                    return { ...person, totalCS };
+                }).sort((a, b) => b.totalCS - a.totalCS); // Sort by total CS, descending
+
+                const list = document.getElementById('preferencesList');
+                list.innerHTML = '';
+                sortedData.forEach(person => {
+                    const item = document.createElement('div');
+                    item.classList.add('preferenceItem');
+                    let preferencesHtml = `<h3>${person.name} (Total CS: ${person.totalCS})</h3>`;
+                    Object.entries(person.preferences).forEach(([key, value]) => {
+                        const difference = parseInt(value, 10) - masterNumbers[key];
+                        const compatibilityScore = calculateCompatibilityScore(difference);
+                        const colorClass = `color-${Math.min(Math.abs(difference), 9)}`;
+                        preferencesHtml += `<p class="${colorClass}">${key}: ${value} (CS: ${compatibilityScore})</p>`;
+                    });
+                    item.innerHTML = preferencesHtml;
+                    list.appendChild(item);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('preferencesList').innerHTML = 'Failed to load preferences.';
+            });
+    }
+
+    fetchAndDisplayPreferences();
+
+    }
+
+    function fetchAndDisplayPreferences() {
+        fetch('http://localhost:3002/people/all')
+            .then(response => response.json())
+            .then(data => {
+                // Calculate total CS for each person and sort by it
+                const sortedData = data.map(person => {
+                    let totalCS = 0;
+                    Object.entries(person.preferences).forEach(([key, value]) => {
+                        const difference = value - masterNumbers[key];
+                        totalCS += calculateCompatibilityScore(difference);
+                    });
+                    return { ...person, totalCS };
+                }).sort((a, b) => b.totalCS - a.totalCS);
+
+                // Update the most compatible woman's name
+                const mostCompatible = sortedData[0]; // The first item after sorting has the highest CS
+                document.getElementById('mostCompatibleWoman').innerHTML =
+                    `Just nu är din mest kompatibla match: <strong>${mostCompatible.name}</strong>`;
+
+                const list = document.getElementById('preferencesList');
+                list.innerHTML = '';
+                sortedData.forEach(person => {
+                    // The rest of your code remains unchanged
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('preferencesList').innerHTML = 'Failed to load preferences.';
+            });
+    }
+
+    fetchAndDisplayPreferences();
+</script>
+
+</body>
+</html>

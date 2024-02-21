@@ -1,68 +1,38 @@
-const config = require('./config')
-const { MongoClient } = require('mongodb')
+const config = require('./config');
+const { MongoClient } = require('mongodb');
 
-const connectionString = config.CONNECTION_STRING
-const client = new MongoClient(connectionString)
+const connectionString = config.CONNECTION_STRING;
+const client = new MongoClient(connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const db = client.db('DnD')
-const collection = db.collection('character')
+const db = client.db('RatingApp');
+const collection = db.collection('People');
 
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongodb').ObjectId;
 
 async function findAll() {
-    await client.connect()
-
-    let data = await collection
-        .find()
-        .toArray()
-
-    client.close()
-
-    return data
+    await client.connect();
+    try {
+        let data = await collection.find().toArray();
+        return data;
+    } finally {
+        client.close();
+    }
 }
 
-async function insert(name, race, dnd_class, level) {
-    await client.connect()
-
-    let result = await collection.insertOne({
-        name: name,
-        race: race,
-        dnd_class: dnd_class,
-        level: level
-    })
-
-    client.close()
-
-    return result
+async function insert(personData) {
+    await client.connect();
+    try {
+        let result = await collection.insertOne(personData);
+        return result;
+    } finally {
+        client.close();
+    }
 }
 
-async function update(_id, name) {
-    await client.connect()
-
-    let result = await collection.updateOne(
-        { _id: new ObjectId(_id) },
-        { $set: { name: name } }
-    )
-
-    client.close()
-
-    return result
-}
-
-async function deleteOne(id) {
-    await client.connect()
-
-
-    let result = await collection.deleteOne({ "_id": new ObjectId(id) })
-
-    client.close()
-
-    return result 
-}
+// Include other functions (update, delete, etc.) if needed
 
 module.exports = {
     findAll,
     insert,
-    update,
-    deleteOne
-}
+    // Export other functions as needed
+};

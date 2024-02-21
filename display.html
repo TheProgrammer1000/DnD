@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h4 {
+        color: #333;
+        text-align: center;
+        max-width: 800px; /* Adjust based on your preference */
+        margin: 0 auto 20px; /* Centers the h4 and adds some bottom margin */
+    }
+        #preferencesList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px; /* Adjust based on your preference */
+        }
+
+        .preferenceItem {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .preferenceItem h3 {
+            margin-top: 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .preferenceItem p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+        }
+
+        a {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .color-0 { background-color: #006400; } /* Dark Green */
+        .color-1 { background-color: #008000; } /* Green */
+        .color-2 { background-color: #ADFF2F; } /* Bright Green */
+        .color-3 { background-color: #FFFF00; } /* Yellow-Green */
+        .color-4 { background-color: #FFFF00; } /* Yellow */
+        .color-5 { background-color: #FFD700; } /* Gold */
+        .color-6 { background-color: #FFA500; } /* Orange */
+        .color-7 { background-color: #FF8C00; } /* Dark Orange */
+        .color-8 { background-color: #FF4500; } /* Orange-Red */
+        .color-9 { background-color: #FF0000; } /* Bright Red */
+    </style>
+</head>
+<body>
+    <h3>Välkommen till</h3>
+    <h1>The Bitch Index</h1>
+    <h4>A more civilized dating experience</h4>
+
+    <h2>Hur funkar det?</h2>
+    <h4>Efter du fyllt i formuläret kommer personen bli loggad i en databas. Efter detta jämförs den loggade datan med en "Master" siffra.
+     På Kompatibilitetssidan sorteras datan ut och desto grönare färg på ett värde desto närmre är siffran till Master siffran.
+     Vid en exakt match får värdet 10 poäng, vid en 1 siffas skillnad får värdet 9 poäng osv hela vägen ner till 0. Siffrorna adderas och blir ett Compatibility Score (CS) och personerna ordnas från vänster till höger där vänster är högst Compatibility Score och höger är lägst.</h4>
+
+    <!-- Added element to display the number of entries -->
+    <div id="entryCount"></div>
+    <div id="preferencesList"></div>
+
+    <a href="input.html">Formulär</a>
+    <a href="home.html">Kompatibilitet</a>
+
+    <script>
+    function fetchAndDisplayPreferences() {
+        fetch('http://localhost:3002/people/all') // Replace with the correct server URL
+            .then(response => response.json())
+            .then(data => {
+                const entryCount = document.getElementById('entryCount');
+                entryCount.innerHTML = `<h3>Antal registrerade värden: ${data.length}</h3>`; // Display the number of entries
+
+                const list = document.getElementById('preferencesList');
+                list.innerHTML = '';
+                data.forEach(person => {
+                    const item = document.createElement('div');
+                    item.classList.add('preferenceItem');
+                    // Only display the person's name
+                    item.innerHTML = `<h3>${person.name}</h3>`;
+                    list.appendChild(item);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('preferencesList').innerHTML = 'Failed to load preferences.';
+                document.getElementById('entryCount').innerHTML = '<h4>Error loading entries.</h4>';
+            });
+    }
+
+    fetchAndDisplayPreferences();
+    </script>
+
+    </body>
+    </html>
