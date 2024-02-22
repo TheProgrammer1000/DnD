@@ -8,8 +8,8 @@
 <style>
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #000; /* Dark background */
-        color: #ccc; /* Light grey text for readability */
+        background-color: #000;
+        color: #ccc;
         margin: 0;
         padding: 20px;
         display: flex;
@@ -18,7 +18,7 @@
     }
 
     h2 {
-        color: #fff; /* White text for headings */
+        color: #fff;
         text-align: center;
         margin-bottom: 30px;
     }
@@ -27,11 +27,10 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        background: #333; /* Darker background for the form */
+        background: #333;
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1); /* Lighter shadow for dark mode */
-        gap: 10px;
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
         max-width: 800px;
     }
 
@@ -43,23 +42,23 @@
 
     label {
         margin-bottom: 5px;
-        color: #fff; /* White text for labels */
+        color: #fff;
     }
 
     input[type="text"],
     input[type="number"] {
         padding: 10px;
         border-radius: 5px;
-        border: 1px solid #555; /* Darker border for inputs */
-        background: #222; /* Darker background for inputs */
-        color: #fff; /* White text for inputs */
+        border: 1px solid #555;
+        background: #222;
+        color: #fff;
         width: 100%;
     }
 
     input[type="submit"] {
         flex-basis: 100%;
         background-color: #5cb85c;
-        color: #000; /* Dark text for better contrast */
+        color: #000;
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
@@ -203,15 +202,14 @@ document.getElementById('preferenceForm').addEventListener('submit', function(ev
 
     const formData = new FormData(event.target);
     const data = { preferences: {} };
-    data.name = formData.get('name'); // Separate name from preferences
+    data.name = formData.get('name');
     formData.forEach((value, key) => {
-        if (key !== 'name') { // Exclude 'name' from preferences object
+        if (key !== 'name') {
             data.preferences[key] = value;
         }
     });
 
-    // Replace 'http://localhost:3002/api/preferences' with your actual backend endpoint
-    fetch('http://localhost:3002/people/add', { // Updated to match your Express route
+    fetch('http://localhost:3002/people/add', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -227,7 +225,6 @@ document.getElementById('preferenceForm').addEventListener('submit', function(ev
 .then(data => {
     console.log('Success:', data);
     alert('Preferences submitted successfully!');
-    // Optionally, redirect the user or give feedback here
 })
 .catch((error) => {
     console.error('Submitted:', error);
@@ -235,7 +232,7 @@ document.getElementById('preferenceForm').addEventListener('submit', function(ev
 });
 
 
-    event.target.reset(); // Optionally, reset the form after submission
+    event.target.reset(); 
 });
 </script>
 

@@ -29,10 +29,7 @@ async function insert(personData) {
     }
 }
 
-// Include other functions (update, delete, etc.) if needed
-
 module.exports = {
     findAll,
     insert,
-    // Export other functions as needed
 };

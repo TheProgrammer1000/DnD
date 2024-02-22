@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #000; /* Dark background */
-            color: #ccc; /* Light grey text for readability */
+            background-color: #000;
+            color: #ccc;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -17,29 +17,29 @@
         }
 
         h1, h2, h3, h4 {
-            color: #fff; /* White text for headings */
+            color: #fff;
             text-align: center;
         }
 
         h4 {
-            max-width: 800px; /* Adjust based on your preference */
-            margin: 0 auto 20px; /* Centers the h4 and adds some bottom margin */
+            max-width: 800px;
+            margin: 0 auto 20px;
         }
 
         #entryCount, #preferencesList {
             width: 100%;
-            max-width: 1200px; /* Adjust based on your preference */
+            max-width: 1200px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
         }
 
         .preferenceItem {
-            border: 1px solid #333; /* Darker border for elements */
+            border: 1px solid #333;
             border-radius: 10px;
             padding: 10px;
-            background-color: #222; /* Dark grey background for items */
-            box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Lighter shadow for dark mode */
+            background-color: #222;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
         }
 
         a {
@@ -62,9 +62,8 @@
             justify-content: center;
             margin-top: 20px;
         }
-
-        /* Adjusted color classes for dark mode, lighter colors for visibility */
-        .color-0 { background-color: #2e8b57; } /* Dark Green, lighter for dark mode */
+        /* Färger för ranknings-systemet, ändra om du vill */
+        .color-0 { background-color: #2e8b57; } /* Dark Green*/
         .color-1 { background-color: #3cb371; } /* Medium Sea Green */
         .color-2 { background-color: #98fb98; } /* Pale Green */
         .color-3 { background-color: #f0e68c; } /* Khaki */
@@ -86,7 +85,6 @@
      På Kompatibilitetssidan sorteras datan ut och desto grönare färg på ett värde desto närmre är siffran till Master siffran.
      Vid en exakt match får värdet 10 poäng, vid en 1 siffas skillnad får värdet 9 poäng osv hela vägen ner till 0. Siffrorna adderas och blir ett Compatibility Score (CS) och personerna ordnas från vänster till höger där vänster är högst Compatibility Score och höger är lägst.</h4>
 
-    <!-- Added element to display the number of entries -->
     <div id="entryCount"></div>
     <div id="preferencesList"></div>
 
@@ -95,18 +93,17 @@
 
     <script>
     function fetchAndDisplayPreferences() {
-        fetch('http://localhost:3002/people/all') // Replace with the correct server URL
+        fetch('http://localhost:3002/people/all')
             .then(response => response.json())
             .then(data => {
                 const entryCount = document.getElementById('entryCount');
-                entryCount.innerHTML = `<h3>Antal registrerade värden: ${data.length}</h3>`; // Display the number of entries
+                entryCount.innerHTML = `<h3>Antal registrerade personer: ${data.length}</h3>`;
 
                 const list = document.getElementById('preferencesList');
                 list.innerHTML = '';
                 data.forEach(person => {
                     const item = document.createElement('div');
                     item.classList.add('preferenceItem');
-                    // Only display the person's name
                     item.innerHTML = `<h3>${person.name}</h3>`;
                     list.appendChild(item);
                 });

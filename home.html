@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Preferences with Gradient Highlights</title>
+    <title>Compatibility</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #000; /* Black background for dark mode */
-            color: #ccc; /* Light grey text for overall readability */
+            font-family: 'Comic Sans', sans-serif;
+            background-color: #000; /* Svart background för dark mode */
+            color: #ccc;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -17,7 +17,7 @@
         }
 
         h1, h2, .preferenceItem h3 {
-            color: #fff; /* White text for headings */
+            color: #fff;
         }
 
         #preferencesList {
@@ -29,16 +29,15 @@
         }
 
         .preferenceItem {
-            border: 1px solid #333; /* Darker border for elements */
+            border: 1px solid #333;
             border-radius: 10px;
             padding: 10px;
-            background-color: #222; /* Dark grey background for items */
-            box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Lighter shadow for dark mode */
+            background-color: #222;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
         }
 
-        /* Specific style for paragraph elements inside preference items */
         .preferenceItem p {
-            color: #000; /* Black text for the values */
+            color: #000;
             margin: 5px 0;
             font-size: 0.9em;
         }
@@ -64,17 +63,46 @@
             margin-top: 20px;
         }
 
-        /* Color highlight classes for background colors of preference values */
-        .color-0 { background-color: #2e8b57; } /* Adjusted for dark mode */
-        .color-1 { background-color: #3cb371; }
-        .color-2 { background-color: #98fb98; }
-        .color-3 { background-color: #f0e68c; }
-        .color-4 { background-color: #ffff99; }
-        .color-5 { background-color: #ffd700; }
-        .color-6 { background-color: #ff8c00; }
-        .color-7 { background-color: #ff6347; }
-        .color-8 { background-color: #ff4500; }
+        /* Färger för ranknings-systemet, ändra om du vill */
+        .color-0 { background-color: #0f9f02; }
+        .color-1 { background-color: #49c445; }
+        .color-2 { background-color: #95ff00; }
+        .color-3 { background-color: #e4f959; }
+        .color-4 { background-color: #fff400; }
+        .color-5 { background-color: #FFCC00; }
+        .color-6 { background-color: #ff9900; }
+        .color-7 { background-color: #ff6600; }
+        .color-8 { background-color: #FF3300; }
         .color-9 { background-color: #ff0000; }
+        #contentArea {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+#preferencesList, #masterValues {
+    flex: 1;
+    display: grid;
+    gap: 20px;
+}
+
+.masterValueBox {
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #222;
+    box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+}
+
+#masterValuesList p {
+    color: #ccc;
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+
     </style>
 
 
@@ -82,13 +110,16 @@
 </head>
 <body>
 <h1>Kompatibilitet</h1>
-<h2 id="mostCompatibleWoman"></h2>
-<div id="preferencesList"></div>
+<h3>Rankas från vänster till höger baserat på Compatibility Score (CS)</h3>
+
+<div id="preferencesList"> </div>
 
 <a href="input.html">Formulär</a>
 <a href="display.html">Hemsida</a>
 
+
 <script>
+    // Master siffror för varje värde, ändra om du vill byta dina värden
 const masterNumbers = {
         "watchMovie": 10,
         "watchSeries": 9,
@@ -112,7 +143,7 @@ const masterNumbers = {
         "boardGames": 10,
         "videoGames": 9,
         "school": 7,
-        "realityTv": 9, // Corrected from "realityTV" to "realityTv"
+        "realityTv": 9,
         "sex": 8,
         "sportsActivities": 7,
         "watchSports": 4,
@@ -123,14 +154,13 @@ const masterNumbers = {
 
     function calculateCompatibilityScore(difference) {
     function calculateCompatibilityScore(difference) {
-        return Math.max(10 - Math.abs(difference), 0); // Ensure the score is not negative
+        return Math.max(10 - Math.abs(difference), 0);
     }
 
     function fetchAndDisplayPreferences() {
-        fetch('http://localhost:3002/people/all') // Replace with the correct server URL
+        fetch('http://localhost:3002/people/all')
             .then(response => response.json())
             .then(data => {
-                // Calculate total CS for each person and sort by it
                 const sortedData = data.map(person => {
                     let totalCS = 0;
                     Object.entries(person.preferences).forEach(([key, value]) => {
@@ -138,14 +168,14 @@ const masterNumbers = {
                         totalCS += calculateCompatibilityScore(difference);
                     });
                     return { ...person, totalCS };
-                }).sort((a, b) => b.totalCS - a.totalCS); // Sort by total CS, descending
+                }).sort((a, b) => b.totalCS - a.totalCS);
 
                 const list = document.getElementById('preferencesList');
                 list.innerHTML = '';
                 sortedData.forEach(person => {
                     const item = document.createElement('div');
                     item.classList.add('preferenceItem');
-                    let preferencesHtml = `<h3>${person.name} (Total CS: ${person.totalCS})</h3>`;
+                    let preferencesHtml = `<h3>${person.name} <br>Total CS: ${person.totalCS}</h3>`;
                     Object.entries(person.preferences).forEach(([key, value]) => {
                         const difference = parseInt(value, 10) - masterNumbers[key];
                         const compatibilityScore = calculateCompatibilityScore(difference);
@@ -170,7 +200,6 @@ const masterNumbers = {
         fetch('http://localhost:3002/people/all')
             .then(response => response.json())
             .then(data => {
-                // Calculate total CS for each person and sort by it
                 const sortedData = data.map(person => {
                     let totalCS = 0;
                     Object.entries(person.preferences).forEach(([key, value]) => {
@@ -180,16 +209,6 @@ const masterNumbers = {
                     return { ...person, totalCS };
                 }).sort((a, b) => b.totalCS - a.totalCS);
 
-                // Update the most compatible woman's name
-                const mostCompatible = sortedData[0]; // The first item after sorting has the highest CS
-                document.getElementById('mostCompatibleWoman').innerHTML =
-                    `Just nu är din mest kompatibla match: <strong>${mostCompatible.name}</strong>`;
-
-                const list = document.getElementById('preferencesList');
-                list.innerHTML = '';
-                sortedData.forEach(person => {
-                    // The rest of your code remains unchanged
-                });
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -198,6 +217,14 @@ const masterNumbers = {
     }
 
     fetchAndDisplayPreferences();
+    const masterValuesList = document.getElementById('masterValuesList');
+Object.entries(masterNumbers).forEach(([key, value]) => {
+    const valueItem = document.createElement('p');
+    valueItem.textContent = `${key}: ${value}`;
+    masterValuesList.appendChild(valueItem);
+});
+
+
 </script>
 
 </body>

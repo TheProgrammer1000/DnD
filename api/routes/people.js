@@ -25,25 +25,22 @@ router.post('/add', async (req, res) => {
     }
 });
 
-// New rankings endpoint
+// Tidigare ranking-kod som inte funkar nu hehe
 router.get('/rankings', async (req, res) => {
     try {
-        let people = await db.findAll(); // Fetch all people data
-        const masterNumber = 5; // Example master number
-
-        // Calculate a "closeness" score for each person's preferences
+        let people = await db.findAll();
+        const masterNumber = 5;
         people = people.map(person => {
             let closenessScore = 0;
             Object.values(person.preferences).forEach(value => {
-                closenessScore += Math.abs(masterNumber - value); // Calculate difference from master number
+                closenessScore += Math.abs(masterNumber - value);
             });
             return { ...person, closenessScore };
         });
 
-        // Sort people by their closeness scores
         people.sort((a, b) => a.closenessScore - b.closenessScore);
 
-        res.json(people); // Send the ranked list of people back in the response
+        res.json(people);
     } catch (error) {
         console.error('Error calculating rankings:', error);
         res.status(500).json({ message: 'Error calculating rankings' });
