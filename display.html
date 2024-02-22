@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #ccc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2, h3, h4 {
+            color: #fff;
+            text-align: center;
+        }
+
+        h4 {
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        #entryCount, #preferencesList {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .preferenceItem {
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #222;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+        }
+
+        a {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        /* Färger för ranknings-systemet, ändra om du vill */
+        .color-0 { background-color: #2e8b57; } /* Dark Green*/
+        .color-1 { background-color: #3cb371; } /* Medium Sea Green */
+        .color-2 { background-color: #98fb98; } /* Pale Green */
+        .color-3 { background-color: #f0e68c; } /* Khaki */
+        .color-4 { background-color: #ffff99; } /* Light Yellow */
+        .color-5 { background-color: #ffd700; } /* Gold */
+        .color-6 { background-color: #ff8c00; } /* Dark Orange */
+        .color-7 { background-color: #ff6347; } /* Tomato */
+        .color-8 { background-color: #ff4500; } /* Orange-Red */
+        .color-9 { background-color: #ff0000; } /* Red */
+    </style>
+</head>
+<body>
+    <h3>Välkommen till</h3>
+    <h1>The Index</h1>
+    <h4>A more civilized dating experience</h4>
+
+    <h2>Hur funkar det?</h2>
+    <h4>Efter du fyllt i formuläret kommer personen bli loggad i en databas. Efter detta jämförs den loggade datan med en "Master" siffra.
+     På Kompatibilitetssidan sorteras datan ut och desto grönare färg på ett värde desto närmre är siffran till Master siffran.
+     Vid en exakt match får värdet 10 poäng, vid en 1 siffas skillnad får värdet 9 poäng osv hela vägen ner till 0. Siffrorna adderas och blir ett Compatibility Score (CS) och personerna ordnas från vänster till höger där vänster är högst Compatibility Score och höger är lägst.</h4>
+
+    <div id="entryCount"></div>
+    <div id="preferencesList"></div>
+
+    <a href="input.html">Formulär</a>
+    <a href="home.html">Kompatibilitet</a>
+
+    <script>
+    function fetchAndDisplayPreferences() {
+        fetch('http://localhost:3002/people/all')
+            .then(response => response.json())
+            .then(data => {
+                const entryCount = document.getElementById('entryCount');
+                entryCount.innerHTML = `<h3>Antal registrerade personer: ${data.length}</h3>`;
+
+                const list = document.getElementById('preferencesList');
+                list.innerHTML = '';
+                data.forEach(person => {
+                    const item = document.createElement('div');
+                    item.classList.add('preferenceItem');
+                    item.innerHTML = `<h3>${person.name}</h3>`;
+                    list.appendChild(item);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('preferencesList').innerHTML = 'Failed to load preferences.';
+                document.getElementById('entryCount').innerHTML = '<h4>Error loading entries.</h4>';
+            });
+    }
+
+    fetchAndDisplayPreferences();
+    </script>
+
+    </body>
+    </html>
