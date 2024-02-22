@@ -8,7 +8,8 @@
 <style>
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #f4f4f4;
+        background-color: #000; /* Dark background */
+        color: #ccc; /* Light grey text for readability */
         margin: 0;
         padding: 20px;
         display: flex;
@@ -17,7 +18,7 @@
     }
 
     h2 {
-        color: #333;
+        color: #fff; /* White text for headings */
         text-align: center;
         margin-bottom: 30px;
     }
@@ -26,37 +27,39 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        background: #ffffff;
+        background: #333; /* Darker background for the form */
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1); /* Lighter shadow for dark mode */
         gap: 10px;
         max-width: 800px;
     }
 
     .form-group {
-        flex-basis: calc(50% - 20px); /* Adjust based on preference */
+        flex-basis: calc(50% - 20px);
         display: flex;
         flex-direction: column;
     }
 
     label {
         margin-bottom: 5px;
-        color: #333;
+        color: #fff; /* White text for labels */
     }
 
     input[type="text"],
     input[type="number"] {
         padding: 10px;
         border-radius: 5px;
-        border: 1px solid #ddd;
+        border: 1px solid #555; /* Darker border for inputs */
+        background: #222; /* Darker background for inputs */
+        color: #fff; /* White text for inputs */
         width: 100%;
     }
 
     input[type="submit"] {
         flex-basis: 100%;
         background-color: #5cb85c;
-        color: white;
+        color: #000; /* Dark text for better contrast */
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
@@ -87,10 +90,11 @@
     .navigation {
         display: flex;
         justify-content: center;
-        gap: 10px; /* Adjust the space between buttons */
+        gap: 10px;
         margin-top: 20px;
     }
 </style>
+
 
 
 <body>

@@ -7,7 +7,8 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background-color: #000; /* Dark background */
+            color: #ccc; /* Light grey text for readability */
             margin: 0;
             padding: 20px;
             display: flex;
@@ -15,43 +16,30 @@
             align-items: center;
         }
 
-        h2 {
-            color: #333;
+        h1, h2, h3, h4 {
+            color: #fff; /* White text for headings */
             text-align: center;
-            margin-bottom: 30px;
         }
+
         h4 {
-        color: #333;
-        text-align: center;
-        max-width: 800px; /* Adjust based on your preference */
-        margin: 0 auto 20px; /* Centers the h4 and adds some bottom margin */
-    }
-        #preferencesList {
+            max-width: 800px; /* Adjust based on your preference */
+            margin: 0 auto 20px; /* Centers the h4 and adds some bottom margin */
+        }
+
+        #entryCount, #preferencesList {
+            width: 100%;
+            max-width: 1200px; /* Adjust based on your preference */
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
-            width: 100%;
-            max-width: 1200px; /* Adjust based on your preference */
         }
 
         .preferenceItem {
-            border: 1px solid #ccc;
+            border: 1px solid #333; /* Darker border for elements */
             border-radius: 10px;
             padding: 10px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .preferenceItem h3 {
-            margin-top: 0;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .preferenceItem p {
-            margin: 5px 0;
-            font-size: 0.9em;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            background-color: #222; /* Dark grey background for items */
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Lighter shadow for dark mode */
         }
 
         a {
@@ -75,21 +63,22 @@
             margin-top: 20px;
         }
 
-        .color-0 { background-color: #006400; } /* Dark Green */
-        .color-1 { background-color: #008000; } /* Green */
-        .color-2 { background-color: #ADFF2F; } /* Bright Green */
-        .color-3 { background-color: #FFFF00; } /* Yellow-Green */
-        .color-4 { background-color: #FFFF00; } /* Yellow */
-        .color-5 { background-color: #FFD700; } /* Gold */
-        .color-6 { background-color: #FFA500; } /* Orange */
-        .color-7 { background-color: #FF8C00; } /* Dark Orange */
-        .color-8 { background-color: #FF4500; } /* Orange-Red */
-        .color-9 { background-color: #FF0000; } /* Bright Red */
+        /* Adjusted color classes for dark mode, lighter colors for visibility */
+        .color-0 { background-color: #2e8b57; } /* Dark Green, lighter for dark mode */
+        .color-1 { background-color: #3cb371; } /* Medium Sea Green */
+        .color-2 { background-color: #98fb98; } /* Pale Green */
+        .color-3 { background-color: #f0e68c; } /* Khaki */
+        .color-4 { background-color: #ffff99; } /* Light Yellow */
+        .color-5 { background-color: #ffd700; } /* Gold */
+        .color-6 { background-color: #ff8c00; } /* Dark Orange */
+        .color-7 { background-color: #ff6347; } /* Tomato */
+        .color-8 { background-color: #ff4500; } /* Orange-Red */
+        .color-9 { background-color: #ff0000; } /* Red */
     </style>
 </head>
 <body>
     <h3>Välkommen till</h3>
-    <h1>The Bitch Index</h1>
+    <h1>The Index</h1>
     <h4>A more civilized dating experience</h4>
 
     <h2>Hur funkar det?</h2>
